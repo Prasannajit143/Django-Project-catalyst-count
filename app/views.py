@@ -71,14 +71,15 @@ def save_user(requst):
 class CsvUploader(TemplateView):
     template_name = 'file_upload.html'
     def post(self, request):
+        t1 = time.perf_counter()
         csv_file = request.FILES['csv']
-        file = pd.read_csv(csv_file) 
+        file = pd.read_csv(csv_file,encoding='utf-8') 
         locality_split = file['locality'].str.split(',', expand=True)
         file['city'] = locality_split[0]
         file['state'] = locality_split[1]
         file.drop('locality', axis=1, inplace=True)
-
-        df = file.dropna()
+        df =file.dropna()
+        print(df.isnull().sum())
         length = len(df)
         var1= length//10
         li = []
@@ -87,7 +88,7 @@ class CsvUploader(TemplateView):
 
         if var1*10!=length:
             li.append(df.iloc[var1*10:,:])
-        t1 = time.perf_counter()
+
         for i in li:
             cursor = connection.cursor()
             cols = 'data_id, name, domain, year_founded, industry, size_range,country,linkdin_url, current_employee_estimate, total_employee_estimate,city,state'
@@ -97,7 +98,9 @@ class CsvUploader(TemplateView):
             cursor.executemany(query, values)
             connection.commit()
             print("Data inserted successfully!")
+
         t2 = time.perf_counter()
+        print(t2-t1)
         messages.success(request,f'File loaded within {t2-t1} sec ')
         return redirect("/home")
     
