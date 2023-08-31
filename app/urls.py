@@ -9,5 +9,6 @@ urlpatterns = [
     path('add_user/',add_user,name="add_user"),
     path('save_user',save_user,name="save_user"),
     path('csv-uploader/', CsvUploader.as_view(), name='csv_uploader'),
+    path('filter/',filter,name="filter"),
 ]
 

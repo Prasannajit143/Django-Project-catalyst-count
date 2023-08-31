@@ -3,11 +3,15 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.utils import timezone
 from django.db import connection
 import pandas as pd
+from django.db.models import Q
+from django.contrib import messages
+import time
 
 def Home(request):
     return redirect('/accounts/login')
@@ -67,7 +71,6 @@ def save_user(requst):
 class CsvUploader(TemplateView):
     template_name = 'file_upload.html'
     def post(self, request):
-        start_time = timezone.now()
         csv_file = request.FILES['csv']
         file = pd.read_csv(csv_file) 
         locality_split = file['locality'].str.split(',', expand=True)
@@ -84,7 +87,7 @@ class CsvUploader(TemplateView):
 
         if var1*10!=length:
             li.append(df.iloc[var1*10:,:])
-
+        t1 = time.perf_counter()
         for i in li:
             cursor = connection.cursor()
             cols = 'data_id, name, domain, year_founded, industry, size_range,country,linkdin_url, current_employee_estimate, total_employee_estimate,city,state'
@@ -94,5 +97,22 @@ class CsvUploader(TemplateView):
             cursor.executemany(query, values)
             connection.commit()
             print("Data inserted successfully!")
+        t2 = time.perf_counter()
+        messages.success(request,f'File loaded within {t2-t1} sec ')
         return redirect("/home")
     
+def filter(request):
+    keyword = request.POST.get('keyword')
+    industry = request.POST.get('industry')
+    year_founded = request.POST.get('year_founded')
+    city = request.POST.get('city')
+    state = request.POST.get('state')
+    country = request.POST.get('country')
+
+    query = csvdata.objects.filter(Q(name__icontains=keyword) or Q(industry=industry) or Q(year_founded=year_founded) or
+                                   Q(city=city) or Q(state=state) or Q(country=country) )
+    count=query.count()
+    print(query.count())
+    # messages.add_message(request,  )
+    messages.success(request,f'{count} records found for the query')
+    return redirect('/query_builder')

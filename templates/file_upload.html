@@ -6,10 +6,16 @@
 {% endblock %}
 
 {% block body %}
-<style>
-
-</style>
 <div class="container">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success ml-0" role="alert">
+          {% if message.tags %} {% endif %}{{ message }}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <div class="mb-3" style="width:350px">
         <h3 class="mt-4 mb-4">Upload Data </h3>
@@ -22,7 +28,6 @@
             <input type="submit" class="btn btn-primary btn-sm" value="Start Upload">
         </form>
     </div>
-    <h4>This much time taking this web to load your file {{time}}</h4>
 </div>
 
 {% endblock %}
