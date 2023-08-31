@@ -1,0 +1,102 @@
+{% extends 'basic.html' %}
+
+{% block head_title %} Query Builder {% endblock %}
+
+{% block CSS %}
+
+{% endblock %}
+
+{% block body %}
+<style>
+  /* Reset some default styles */
+  body, h1, select {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-top: 20px;
+  }
+  
+  /* Style the select menu */
+  .custom-select {
+    padding: 7px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+    width: 200px;
+    margin-top: 20px;
+  }
+  
+</style>
+<div class="container">
+    <h3 class="mb-3 mt-3"> Query Builder</h3>
+
+    <div style="width:550px">
+    <form>
+    <div class="row">
+      <div class="col-4">
+        <select class="custom-select form-select form-select-lg mb-3 mr-5" aria-label=".form-select-lg example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+      </div>
+      <div class="col-4">
+        <select class="custom-select form-select form-select-lg mb-3 mr-5" aria-label=".form-select-lg example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+      </div>
+      <div class="col-4">
+        <select class=" custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+      </div>
+      <div class="col-4">
+        <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+      </div>
+      <div class="col-4">
+        <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+      </div> 
+      <div class="col-4">
+        <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+      </div> 
+    </div>
+</form>
+<input type="submit" class="btn btn-primary" value="Query Date"> <span class="ml-3"><input type="submit" class="btn btn-primary" value="Reset"></span>
+
+</div>
+  </div>
+
+{% endblock %}

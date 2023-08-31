@@ -1,0 +1,31 @@
+{% extends 'basic.html' %}
+
+{% block head_title %} File Upload {% endblock %}
+
+{% block CSS %}
+{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        {% comment %} text-align: center; {% endcomment %}
+      }
+</style>
+<div class="container">
+
+    <div class="mb-3" style="width:350px">
+        <h3 class="mt-5 mb-4">Upload Data </h3>
+        <form id="example-form1" action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+            <input class="form-control" type="file" id="formFile">
+            </div>
+        </form>
+        <input type="submit" class="btn btn-primary" value="Start Upload">
+    </div>
+    <h4>This much time taking this web to load your file {{time}}</h4>
+</div>
+
+{% endblock %}
