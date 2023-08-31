@@ -1,13 +1,13 @@
 from django.urls import path
-from . import views
+from app.views import *
 urlpatterns = [
-    path("",views.Home,name="Home"),
-    path('home',views.welcome,name="home"),
-    path('query_builder',views.query_builder,name="query_builder"),
-    path('users',views.users,name="users"),
-    path('delete/<int:pk>/',views.delete,name="delete"),
-    path('add_user/',views.add_user,name="add_user"),
-    path('save_user',views.save_user,name="save_user")
+    path("",Home,name="Home"),
+    path('home',welcome,name="home"),
+    path('query_builder',query_builder,name="query_builder"),
+    path('users',users,name="users"),
+    path('delete/<int:pk>/',delete,name="delete"),
+    path('add_user/',add_user,name="add_user"),
+    path('save_user',save_user,name="save_user"),
+    path('csv-uploader/', CsvUploader.as_view(), name='csv_uploader'),
 ]
 
-# fdlkjl

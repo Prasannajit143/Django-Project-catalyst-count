@@ -12,14 +12,15 @@
 <div class="container">
 
     <div class="mb-3" style="width:350px">
-        <h3 class="mt-5 mb-4">Upload Data </h3>
-        <form id="example-form1" action="." method="post" enctype="multipart/form-data">
+        <h3 class="mt-4 mb-4">Upload Data </h3>
+        
+        <form id="example-form1" action="/csv-uploader/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-            <input class="form-control" type="file" id="formFile">
+            <input class="form-control" type="file" id="customFile" name="csv" required accept=".csv" size="60">
             </div>
+            <input type="submit" class="btn btn-primary btn-sm" value="Start Upload">
         </form>
-        <input type="submit" class="btn btn-primary btn-sm" value="Start Upload">
     </div>
     <h4>This much time taking this web to load your file {{time}}</h4>
 </div>

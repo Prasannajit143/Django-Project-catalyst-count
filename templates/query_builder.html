@@ -35,44 +35,61 @@
 <div class="container">
     <h3 class="mb-3 mt-3"> Query Builder</h3>
 
-    <div style="width:550px">
+    <div style="width:650px">
     <form>
     <div class="row">
       <div class="col-4">
-        <select class="custom-select form-select form-select-lg mb-3 mr-5" aria-label=".form-select-lg example">
-            <option selected>Open this select menu</option>
+        {% comment %} <select class="custom-select form-select form-select-lg mb-3 mr-5" aria-label=".form-select-lg example">
+            <option selected>Keyword</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
-          </select>
+          </select> {% endcomment %}
+          <input class="custom-select form-select form-select-lg mb-3 mr-5" type="text" name="Keyword" placeholder="Keyword"/>
       </div>
-      <div class="col-4">
+      <div class="col-4 ">
         <select class="custom-select form-select form-select-lg mb-3 mr-5" aria-label=".form-select-lg example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected>Industry</option>
+            {% for i in Industry %}
+            <option value="{{forloop.counter}}">{{i}}</option>
+            {% endfor %}
           </select>
       </div>
       <div class="col-4">
         <select class=" custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected>Year Founded</option>
+            {% for i in year_founded %}
+            <option value="{{forloop.counter}}">{{i}}</option>
+            {% endfor %}
           </select>
       </div>
       <div class="col-4">
         <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected>City</option>
+            {% for i in city %}
+            <option value="{{forloop.counter}}">{{i}}</option>
+            {% endfor %}
           </select>
       </div>
       <div class="col-4">
         <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-            <option selected>Open this select menu</option>
+            <option selected>State</option>
+            {% for i in state %}
+            <option value="{{forloop.counter}}">{{i}}</option>
+            {% endfor %}
+          </select>
+      </div> 
+      <div class="col-4">
+        <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Country</option>
+            {% for i in country %}
+            <option value="{{forloop.counter}}">{{i}}</option>
+            {% endfor %}
+          </select>
+      </div> 
+      <div class="col-4">
+        <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Emplyees(From)</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
@@ -80,7 +97,7 @@
       </div> 
       <div class="col-4">
         <select class="custom-select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-            <option selected>Open this select menu</option>
+            <option selected>Emplyees(To)</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
