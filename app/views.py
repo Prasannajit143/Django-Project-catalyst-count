@@ -69,16 +69,41 @@ def save_user(requst):
 
 
 class CsvUploader(TemplateView):
-    template_name = 'file_upload.html'
     def post(self, request):
         t1 = time.perf_counter()
         csv_file = request.FILES['csv']
-        file = pd.read_csv(csv_file,encoding='utf-8') 
-        locality_split = file['locality'].str.split(',', expand=True)
-        file['city'] = locality_split[0]
-        file['state'] = locality_split[1]
-        file.drop('locality', axis=1, inplace=True)
-        df =file.dropna()
+        dtype_mapping = {
+            'year founded': float,
+            'current employee estimate': int,
+            'total employee estimate': int,
+            'name': str,
+            'domain': str,
+            'industry': str,
+            'size range': str,
+            'country': str,
+            'linkedin url': str,
+            'locality': str  
+        }
+        df = pd.read_csv(csv_file, encoding='utf-8', dtype=dtype_mapping)
+        df[['city', 'state']] = df['locality'].str.extract(r'^(.*?),\s*(.*?)$')
+        df.drop('locality', axis=1, inplace=True)
+        default_int_value = 0
+        default_str_value = "None"
+
+        default_values = {
+            'year founded': default_int_value,
+            'current employee estimate': default_int_value,
+            'total employee estimate': default_int_value,
+            'name': default_str_value,
+            'domain': default_str_value,
+            'industry': default_str_value,
+            'size range': default_str_value,
+            'country': default_str_value,
+            'linkedin url': default_str_value,
+            'city': default_str_value,
+            'state': default_str_value
+        }
+        df.fillna(default_values, inplace=True)
         print(df.isnull().sum())
         length = len(df)
         var1= length//10
