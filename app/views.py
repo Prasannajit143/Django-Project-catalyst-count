@@ -89,6 +89,7 @@ class CsvUploader(TemplateView):
         if var1*10!=length:
             li.append(df.iloc[var1*10:,:])
 
+
         for i in li:
             cursor = connection.cursor()
             cols = 'data_id, name, domain, year_founded, industry, size_range,country,linkdin_url, current_employee_estimate, total_employee_estimate,city,state'
