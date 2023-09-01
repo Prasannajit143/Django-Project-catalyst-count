@@ -1,17 +1,15 @@
 from django.shortcuts import redirect,render
 from django.contrib.auth.models import User
-from rest_framework import viewsets
 from .models import *
 from .serializers import *
-from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.shortcuts import render
-from django.utils import timezone
 from django.db import connection
 import pandas as pd
 from django.db.models import Q
 from django.contrib import messages
 import time
+from rest_framework.decorators import api_view
 
 def Home(request):
     return redirect('/accounts/login')
@@ -85,7 +83,11 @@ class CsvUploader(TemplateView):
             'locality': str  
         }
         df = pd.read_csv(csv_file, encoding='utf-8', dtype=dtype_mapping)
-        df[['city', 'state']] = df['locality'].str.extract(r'^(.*?),\s*(.*?)$')
+        # df[['city', 'state']] = df['locality'].str.extract(r'^(.*?),\s*(.*?)$')
+        locality_split = df['locality'].str.split(',', expand=True)
+        df['city'] = locality_split[0]
+        df['state'] = locality_split[1]
+        
         df.drop('locality', axis=1, inplace=True)
         default_int_value = 0
         default_str_value = "None"
@@ -127,21 +129,36 @@ class CsvUploader(TemplateView):
 
         t2 = time.perf_counter()
         print(t2-t1)
-        messages.success(request,f'File loaded within {t2-t1} sec ')
+        val ="{:.2f}".format(t2-t1)
+        messages.success(request,f'File loaded in {val} second ')
         return redirect("/home")
-    
-def filter(request):
-    keyword = request.POST.get('keyword')
-    industry = request.POST.get('industry')
-    year_founded = request.POST.get('year_founded')
-    city = request.POST.get('city')
-    state = request.POST.get('state')
-    country = request.POST.get('country')
 
-    query = csvdata.objects.filter(Q(name__icontains=keyword) or Q(industry=industry) or Q(year_founded=year_founded) or
-                                   Q(city=city) or Q(state=state) or Q(country=country) )
-    count=query.count()
-    print(query.count())
-    # messages.add_message(request,  )
-    messages.success(request,f'{count} records found for the query')
+@api_view(['GET'])
+def filter(request):
+    keyword = request.GET.get('keyword')
+    industry = request.GET.get('industry')
+    year_founded = request.GET.get('year_founded')
+    city = request.GET.get('city')
+    state = request.GET.get('state')
+    country = request.GET.get('country')
+
+    query = Q()
+
+    if keyword:
+        query &= Q(name__icontains=keyword) 
+    if industry:
+        query &= Q(industry__icontains=industry)
+    if year_founded:
+        query &= Q(year_founded=year_founded)
+    if city:
+        query &= Q(city__icontains=city)
+    if state:
+        query &= Q(state__icontains=state)
+    if country:
+        query &= Q(country__icontains=country)
+
+    companies = csvdata.objects.filter(query)
+
+    result_count = companies.count()
+    messages.success(request,f'{result_count} Records found for the query')
     return redirect('/query_builder')
