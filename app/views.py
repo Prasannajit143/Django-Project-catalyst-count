@@ -211,3 +211,40 @@ def filter(request):
 
 # # Close the database connection
 # connection.close()
+
+
+# import psycopg2
+
+# # Establish a connection to your PostgreSQL database
+# connection = psycopg2.connect(
+#     host="your_host",
+#     database="your_database",
+#     user="your_user",
+#     password="your_password"
+# )
+
+# # Create a cursor
+# cursor = connection.cursor()
+
+# # Define the table columns and placeholders
+# cols = 'data_id, name, domain, year_founded, industry, size_range, country, linkdin_url, current_employee_estimate, total_employee_estimate, city, state'
+# placeholders = ', '.join(['%s'] * len(i.columns)
+
+# # Define the SQL query
+# query = f"INSERT INTO app_csvdata ({cols}) VALUES ({placeholders})"
+
+# # Prepare the data as a list of tuples
+# values = [tuple(row) for row in i.to_numpy()]
+
+# # Execute the SQL query
+# cursor.executemany(query, values)
+
+# # Commit the transaction
+# connection.commit()
+
+# # Close the cursor and the connection
+# cursor.close()
+# connection.close()
+
+# print("Data inserted successfully!")
+
