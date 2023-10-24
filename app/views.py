@@ -162,3 +162,52 @@ def filter(request):
     result_count = companies.count()
     messages.success(request,f'{result_count} Records found for the query')
     return redirect('/query_builder')
+
+
+# import os
+# import pandas as pd
+
+# # Specify the directory containing your zip file or folders
+# source_dir = 'Folder'  # Replace with the path to your directory
+
+# # Initialize an empty DataFrame to store the combined data
+# combined_data = pd.DataFrame()
+
+# # Walk through the source directory and its subdirectories
+# for root, dirs, files in os.walk(source_dir):
+#     for file in files:
+#         if file.lower().endswith('.csv'):
+#             file_path = os.path.join(root, file)
+#             data = pd.read_csv(file_path)
+#             combined_data = pd.concat([combined_data, data], ignore_index=True)
+
+# # Specify the path where you want to save the combined CSV file
+# combined_csv_path = 'combined_data.xlsx'
+
+# combined_data["PreviousValues"] = combined_data["PreviousValues"].apply(lambda x: f'{x:,.2f}')
+# # Save the combined data to a CSV file
+# combined_data.to_excel(combined_csv_path)
+# print(combined_data)
+
+# import pandas as pd
+# import psycopg2
+
+# # Establish a database connection
+# connection = psycopg2.connect(
+#     host="your_host",
+#     database="your_database",
+#     user="your_user",
+#     password="your_password"
+# )
+
+# # Your SQL query
+# query = "SELECT * FROM your_table"
+
+# # Fetch data into a Pandas DataFrame
+# df = pd.read_sql_query(query, connection)
+
+# # Save DataFrame to a CSV file
+# df.to_csv('output.csv', index=False)
+
+# # Close the database connection
+# connection.close()
